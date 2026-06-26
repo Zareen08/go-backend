@@ -3,7 +3,7 @@
 .env.local
 .env.*.local
 
-# Go build files
+# Go build artifacts
 *.exe
 *.exe~
 *.dll
@@ -11,8 +11,9 @@
 *.dylib
 *.test
 *.out
-tmp/
-vendor/
+*.log
+app
+main
 
 # Air temp files
 tmp/

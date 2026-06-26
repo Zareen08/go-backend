@@ -86,6 +86,13 @@ func main() {
         AllowHeaders: []string{echo.HeaderAuthorization, echo.HeaderContentType},
     }))
 
+    e.GET("/", func(c echo.Context) error {
+        return c.JSON(200, map[string]string{
+            "success": "true",
+            "message": "SpotSync API is running successfully",
+        })
+    })
+    
     // Health check
     e.GET("/health", func(c echo.Context) error {
         return c.JSON(200, map[string]string{"status": "ok"})

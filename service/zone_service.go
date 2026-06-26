@@ -4,7 +4,6 @@ import (
     "spotsync-api/dto"
     "spotsync-api/models"
     "spotsync-api/repository"
-    "spotsync-api/utils"
 )
 
 type ZoneService struct {
@@ -32,7 +31,7 @@ func (s *ZoneService) CreateZone(req *dto.CreateZoneRequest) (*dto.ZoneResponse,
         Name:           zone.Name,
         Type:           zone.Type,
         TotalCapacity:  zone.TotalCapacity,
-        AvailableSpots: zone.TotalCapacity, // Initially all spots available
+        AvailableSpots: zone.TotalCapacity,
         PricePerHour:   zone.PricePerHour,
         CreatedAt:      zone.CreatedAt,
         UpdatedAt:      zone.UpdatedAt,
@@ -70,38 +69,6 @@ func (s *ZoneService) GetAllZones() ([]dto.ZoneResponse, error) {
 func (s *ZoneService) GetZoneByID(id uint) (*dto.ZoneResponse, error) {
     zone, err := s.zoneRepo.FindByID(id)
     if err != nil {
-        return nil, err
-    }
-
-    activeCount, err := s.zoneRepo.GetActiveReservationCount(zone.ID)
-    if err != nil {
-        return nil, err
-    }
-
-    return &dto.ZoneResponse{
-        ID:             zone.ID,
-        Name:           zone.Name,
-        Type:           zone.Type,
-        TotalCapacity:  zone.TotalCapacity,
-        AvailableSpots: zone.TotalCapacity - int(activeCount),
-        PricePerHour:   zone.PricePerHour,
-        CreatedAt:      zone.CreatedAt,
-        UpdatedAt:      zone.UpdatedAt,
-    }, nil
-}
-
-func (s *ZoneService) UpdateZone(id uint, req *dto.CreateZoneRequest) (*dto.ZoneResponse, error) {
-    zone, err := s.zoneRepo.FindByID(id)
-    if err != nil {
-        return nil, err
-    }
-
-    zone.Name = req.Name
-    zone.Type = req.Type
-    zone.TotalCapacity = req.TotalCapacity
-    zone.PricePerHour = req.PricePerHour
-
-    if err := s.zoneRepo.Update(zone); err != nil {
         return nil, err
     }
 

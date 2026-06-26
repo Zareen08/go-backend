@@ -55,3 +55,26 @@ go mod download
 4. Run the application
 bash
 go run cmd/main.go
+
+### API Endpoints
+
+**Authentication**
+
+Method	Endpoint	Description	Access
+POST	/api/v1/auth/register	Register new user	Public
+POST	/api/v1/auth/login	Login user	Public
+
+**Parking Zones**
+
+Method	Endpoint	Description	Access
+GET	/api/v1/zones	Get all zones	Public
+GET	/api/v1/zones/:id	Get zone by ID	Public
+POST	/api/v1/zones	Create zone	Admin
+
+**Reservations**
+
+Method	Endpoint	Description	Access
+POST	/api/v1/reservations	Create reservation	Authenticated
+GET	/api/v1/reservations/my-reservations	Get my reservations	Authenticated
+DELETE	/api/v1/reservations/:id	Cancel reservation	Authenticated
+GET	/api/v1/reservations	Get all reservations	Admin
